@@ -1,0 +1,51 @@
+plugins {
+    id 'com.ullink.msbuild' version '3.15'
+    //id "org.sonarqube" version "3.3"
+}
+
+subprojects {
+    // apply plugin: 'com.ullink.msbuild' 
+    group = 'com.ullink.gradle'
+
+    description 'Gradle plugin for MSBuild project build for GuiPSA.'
+//    task sonarqube(type: sonarqube) {
+//        properties {
+//            property "sonar.sources", "src"
+//        }
+//    }
+
+    task BuildModeDebug(type: com.ullink.Msbuild) {
+//        projectFile = file("${project.name}\\${project.name}.vcxproj")
+        solutionFile = "${project.name}.sln"
+        projectName = project.name
+        configuration = 'Debug'
+        platform = 'Win32'
+        verbosity = 'detailed'
+        //targets = ['Clean', 'Rebuild'] 
+        version = '15.9.21'
+        msbuildDir = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\MSBuild\\15.0\\Bin'
+    }
+
+    task BuildModeRelease(type: com.ullink.Msbuild) {
+        description 'Gradle plugin for MSBuild project build Mode Release for GuiPSA.'
+//        projectFile = file("${project.name}\\${project.name}.vcxproj")
+        solutionFile = "${project.name}.sln"
+        projectName = project.name
+        configuration = 'Release'
+        platform = 'Win32'
+        verbosity = 'detailed'
+        version = '15.9.21'
+        msbuildDir = 'C:\\Program Files (x86)\\Microsoft Visual Studio\\2017\\Professional\\MSBuild\\15.0\\Bin'
+    }
+
+
+}
+
+
+allprojects {
+    task printName {
+        doLast {
+            println "My project name: '${project.name}'"
+        }
+    }
+} 
